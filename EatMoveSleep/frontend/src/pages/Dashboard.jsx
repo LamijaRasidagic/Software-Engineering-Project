@@ -32,19 +32,19 @@ const Dashboard = () => {
     }
 
     const allUsers = JSON.parse(localStorage.getItem('ems_users')) || [];
-    const email = localStorage.getItem('ems_logged_in_email');
-    const storedUser = allUsers.find((u) => u.email === email);
+   const email = localStorage.getItem('ems_logged_in_email');
+   const storedUser = allUsers.find((u) => u.email === email);
 
-    const storedImage = localStorage.getItem('ems_user_image');
-    const storedWorkouts = JSON.parse(localStorage.getItem('ems_workouts')) || [];
-    const storedMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const storedSleep = JSON.parse(localStorage.getItem('ems_sleep')) || [];
+   const storedImage = localStorage.getItem('ems_user_image');
+   const storedWorkouts = JSON.parse(localStorage.getItem(`ems_workouts_${email}`)) || [];
+   const storedMeals = JSON.parse(localStorage.getItem(`ems_meals_${email}`)) || [];
+   const storedSleep = JSON.parse(localStorage.getItem(`ems_sleep_${email}`)) || []; // (optional: make this per-user too)
 
-    if (storedUser) setUser(storedUser);
-    if (storedImage) setImage(storedImage);
-    setWorkouts(storedWorkouts);
-    setMeals(storedMeals);
-    setSleep(storedSleep);
+if (storedUser) setUser(storedUser);
+if (storedImage) setImage(storedImage);
+setWorkouts(storedWorkouts);
+setMeals(storedMeals);
+setSleep(storedSleep);
   }, [navigate]);
 
   if (!user)

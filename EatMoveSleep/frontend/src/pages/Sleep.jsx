@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import background from '../assets/image8.jpg'; 
+import background from '../assets/image8.jpg';
 
 const Sleep = () => {
   const navigate = useNavigate();
@@ -8,18 +8,23 @@ const Sleep = () => {
   const [hours, setHours] = useState('');
   const [quality, setQuality] = useState('');
   const [records, setRecords] = useState([]);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('ems_logged_in');
-    if (!isLoggedIn) {
+    const isLoggedIn = localStorage.getItem('ems_logged_in') === 'true';
+    const userEmail = localStorage.getItem('ems_logged_in_email');
+
+    if (!isLoggedIn || !userEmail) {
       navigate('/');
       return;
     }
 
+    setEmail(userEmail);
+
     const today = new Date().toISOString().split('T')[0];
     setDate(today);
 
-    const stored = JSON.parse(localStorage.getItem('ems_sleep')) || [];
+    const stored = JSON.parse(localStorage.getItem(`ems_sleep_${userEmail}`)) || [];
     setRecords(stored);
   }, [navigate]);
 
@@ -31,12 +36,13 @@ const Sleep = () => {
       id: Date.now(),
       date,
       hours: parseFloat(hours),
-      quality: quality || 'N/A'
+      quality: quality || 'N/A',
+      email
     };
 
     const updated = [...records, newRecord];
     setRecords(updated);
-    localStorage.setItem('ems_sleep', JSON.stringify(updated));
+    localStorage.setItem(`ems_sleep_${email}`, JSON.stringify(updated));
 
     setHours('');
     setQuality('');
@@ -46,7 +52,7 @@ const Sleep = () => {
   const handleDelete = (id) => {
     const updated = records.filter((r) => r.id !== id);
     setRecords(updated);
-    localStorage.setItem('ems_sleep', JSON.stringify(updated));
+    localStorage.setItem(`ems_sleep_${email}`, JSON.stringify(updated));
   };
 
   return (
@@ -118,7 +124,7 @@ const overlayStyle = {
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.6)', // crni overlay
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
   backdropFilter: 'blur(3px)',
   zIndex: 0
 };

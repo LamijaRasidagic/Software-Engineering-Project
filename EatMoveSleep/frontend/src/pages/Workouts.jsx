@@ -36,15 +36,19 @@ const Workouts = () => {
   const [exerciseInput, setExerciseInput] = useState('');
   const [exerciseList, setExerciseList] = useState([]);
   const [workouts, setWorkouts] = useState([]);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('ems_logged_in');
-    if (!isLoggedIn) {
+    const isLoggedIn = localStorage.getItem('ems_logged_in') === 'true';
+    const userEmail = localStorage.getItem('ems_logged_in_email');
+    if (!isLoggedIn || !userEmail) {
       navigate('/');
       return;
     }
 
-    const storedWorkouts = JSON.parse(localStorage.getItem('ems_grouped_workouts')) || [];
+    setEmail(userEmail);
+
+    const storedWorkouts = JSON.parse(localStorage.getItem(`ems_workouts_${userEmail}`)) || [];
     setWorkouts(storedWorkouts);
   }, [navigate]);
 
@@ -70,15 +74,14 @@ const Workouts = () => {
       id: Date.now(),
       title: workoutTitle.trim(),
       exercises: exerciseList,
-      caloriesBurned
+      calories: caloriesBurned,
+      date: new Date().toISOString().split('T')[0],
+      email
     };
 
     const updated = [...workouts, newWorkout];
     setWorkouts(updated);
-    localStorage.setItem('ems_grouped_workouts', JSON.stringify(updated));
-
-    const burnedToday = parseInt(localStorage.getItem('ems_calories_out') || '0');
-    localStorage.setItem('ems_calories_out', burnedToday + caloriesBurned);
+    localStorage.setItem(`ems_workouts_${email}`, JSON.stringify(updated));
 
     setWorkoutTitle('');
     setExerciseInput('');
@@ -88,7 +91,7 @@ const Workouts = () => {
   const handleDelete = (id) => {
     const updated = workouts.filter((w) => w.id !== id);
     setWorkouts(updated);
-    localStorage.setItem('ems_grouped_workouts', JSON.stringify(updated));
+    localStorage.setItem(`ems_workouts_${email}`, JSON.stringify(updated));
   };
 
   return (
@@ -109,7 +112,7 @@ const Workouts = () => {
 
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <input type="text" placeholder="Exercise name" value={exerciseInput} onChange={(e) => setExerciseInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
-          <button onClick={handleAddExercise} style={{ ...buttonStyleBlue, transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#0284c7'} onMouseLeave={(e) => e.target.style.backgroundColor = '#3b82f6'}>+ Add</button>
+          <button onClick={handleAddExercise} style={buttonStyleBlue}>+ Add</button>
         </div>
 
         {exerciseList.length > 0 && (
@@ -142,9 +145,7 @@ const Workouts = () => {
                   <strong style={{ fontSize: '1.2rem' }}>{exercise.name}</strong>
                   <button
                     onClick={() => handleAddFromCard(exercise.name)}
-                    style={{ ...logButtonStyle, marginTop: '0.5rem' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#0284c7'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.6)'}
+                    style={logButtonStyle}
                   >
                     + Add
                   </button>
@@ -161,7 +162,7 @@ const Workouts = () => {
           <li key={workout.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#4b5563', color: 'white', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
             <div>
               <strong>💪 {workout.title}</strong> — {workout.exercises.map(ex => ex.name).join(', ')}<br />
-              🔥 {workout.caloriesBurned} kcal burned
+              🔥 {workout.calories} kcal burned
             </div>
             <button onClick={() => handleDelete(workout.id)} style={deleteStyle}>Delete</button>
           </li>
@@ -171,6 +172,7 @@ const Workouts = () => {
   );
 };
 
+// Styles
 const formContainer = {
   width: '100%',
   maxWidth: '400px',
@@ -248,13 +250,6 @@ const overlay = {
   alignItems: 'center'
 };
 
-const exerciseListStyle = {
-  textAlign: 'left',
-  marginBottom: '1rem',
-  paddingLeft: '1.2rem',
-  color: '#111'
-};
-
 const logButtonStyle = {
   padding: '8px 12px',
   border: 'none',
@@ -262,7 +257,15 @@ const logButtonStyle = {
   backgroundColor: 'rgba(0, 0, 0, 0.6)',
   color: 'white',
   fontWeight: 'bold',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  marginTop: '0.5rem'
+};
+
+const exerciseListStyle = {
+  textAlign: 'left',
+  marginBottom: '1rem',
+  paddingLeft: '1.2rem',
+  color: '#111'
 };
 
 export default Workouts;

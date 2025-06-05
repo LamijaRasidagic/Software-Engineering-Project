@@ -24,7 +24,7 @@ const Analytics = () => {
     const caloriesIn = meals.reduce((sum, m) => sum + (m.calories || 0), 0);
 
     const today = new Date().toISOString().split('T')[0];
-    const todaysCaloriesOut = workouts
+    const caloriesOut = workouts
       .filter(w => w.date === today)
       .reduce((sum, w) => sum + (w.calories || 0), 0);
 
@@ -34,68 +34,51 @@ const Analytics = () => {
     setSummary({
       mealCount: meals.length,
       caloriesIn,
-      caloriesOut: todaysCaloriesOut,
+      caloriesOut,
       sleepHours: totalSleep,
       avgSleep
     });
   }, []);
 
   return (
-    <div
-      style={{
-        ...container,
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop: '5rem'
-      }}
-    >
+    <div style={{
+      ...container,
+      backgroundImage: `url(${background})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      paddingTop: '5rem'
+    }}>
       <h2 style={title}>📊 Your Analytics</h2>
 
       <div style={topRow}>
-        <div
-          style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}
-          onClick={() => navigate('/meals')}
-        >
+        <div style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }} onClick={() => navigate('/meals')}>
           🍽️ <strong>Total Meals Logged</strong>
           <div>{summary.mealCount}</div>
         </div>
 
-        <div
-          style={{ ...card, backgroundColor: '#facc15' }}
-          onClick={() => navigate('/meals')}
-        >
+        <div style={{ ...card, backgroundColor: '#facc15' }} onClick={() => navigate('/meals')}>
           🔥 <strong>Calories In</strong>
           <div>{summary.caloriesIn} kcal</div>
         </div>
 
-        <div
-          style={{ ...card, backgroundColor: '#34d399' }}
-          onClick={() => navigate('/workouts')}
-        >
+        <div style={{ ...card, backgroundColor: '#34d399' }} onClick={() => navigate('/workouts')}>
           🏋️ <strong>Calories Out</strong>
           <div>{summary.caloriesOut} kcal</div>
         </div>
       </div>
 
       <div style={bottomRow}>
-        <div
-          style={{ ...card, backgroundColor: '#818cf8' }}
-          onClick={() => navigate('/sleep')}
-        >
+        <div style={{ ...card, backgroundColor: '#818cf8' }} onClick={() => navigate('/sleep')}>
           😴 <strong>Total Sleep Hours</strong>
           <div>{summary.sleepHours} h</div>
         </div>
 
-        <div
-          style={{ ...card, backgroundColor: '#60a5fa' }}
-          onClick={() => navigate('/sleep')}
-        >
+        <div style={{ ...card, backgroundColor: '#60a5fa' }} onClick={() => navigate('/sleep')}>
           💤 <strong>Avg Sleep</strong>
           <div>{summary.avgSleep} h/night</div>
         </div>
@@ -104,9 +87,7 @@ const Analytics = () => {
   );
 };
 
-const container = {
-  textAlign: 'center'
-};
+const container = { textAlign: 'center' };
 
 const title = {
   marginBottom: '2rem',

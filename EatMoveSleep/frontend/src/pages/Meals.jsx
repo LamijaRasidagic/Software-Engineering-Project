@@ -36,8 +36,7 @@ const Meals = () => {
     }
     setUserEmail(email);
 
-    const allMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const userMeals = allMeals.filter((m) => m.email === email);
+    const userMeals = JSON.parse(localStorage.getItem(`ems_meals_${email}`)) || [];
     setMeals(userMeals);
   }, [navigate]);
 
@@ -54,12 +53,10 @@ const Meals = () => {
       email: userEmail,
     };
 
-    const allMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const updatedAllMeals = [...allMeals, newMeal];
-    localStorage.setItem('ems_meals', JSON.stringify(updatedAllMeals));
-
-    const userMeals = updatedAllMeals.filter((m) => m.email === userEmail);
-    setMeals(userMeals);
+    const userMeals = JSON.parse(localStorage.getItem(`ems_meals_${userEmail}`)) || [];
+    const updatedMeals = [...userMeals, newMeal];
+    localStorage.setItem(`ems_meals_${userEmail}`, JSON.stringify(updatedMeals));
+    setMeals(updatedMeals);
 
     setMealName('');
     setCalories('');
@@ -73,21 +70,17 @@ const Meals = () => {
       email: userEmail,
     };
 
-    const allMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const updatedAllMeals = [...allMeals, newMeal];
-    localStorage.setItem('ems_meals', JSON.stringify(updatedAllMeals));
-
-    const userMeals = updatedAllMeals.filter((m) => m.email === userEmail);
-    setMeals(userMeals);
+    const userMeals = JSON.parse(localStorage.getItem(`ems_meals_${userEmail}`)) || [];
+    const updatedMeals = [...userMeals, newMeal];
+    localStorage.setItem(`ems_meals_${userEmail}`, JSON.stringify(updatedMeals));
+    setMeals(updatedMeals);
   };
 
   const handleDelete = (id) => {
-    const allMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const updatedAllMeals = allMeals.filter((m) => m.id !== id);
-    localStorage.setItem('ems_meals', JSON.stringify(updatedAllMeals));
-
-    const userMeals = updatedAllMeals.filter((m) => m.email === userEmail);
-    setMeals(userMeals);
+    const userMeals = JSON.parse(localStorage.getItem(`ems_meals_${userEmail}`)) || [];
+    const updatedMeals = userMeals.filter((m) => m.id !== id);
+    localStorage.setItem(`ems_meals_${userEmail}`, JSON.stringify(updatedMeals));
+    setMeals(updatedMeals);
   };
 
   return (
@@ -138,7 +131,7 @@ const Meals = () => {
                   onClick={() => handleLogDefaultRecipe(r)}
                   style={{ ...logButtonStyle, transition: 'background-color 0.3s' }}
                   onMouseEnter={(e) => e.target.style.backgroundColor = '#0284c7'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.6)'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.6)' }
                 >
                   + Log
                 </button>
