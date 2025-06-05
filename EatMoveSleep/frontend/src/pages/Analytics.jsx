@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import background from '../assets/plava.jpg'; // nova pozadina
 
 const Analytics = () => {
   const [summary, setSummary] = useState({
@@ -8,6 +10,8 @@ const Analytics = () => {
     sleepHours: 0,
     avgSleep: 0
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const email = localStorage.getItem('ems_logged_in_email');
@@ -32,33 +36,61 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div style={container}>
+    <div
+      style={{
+        ...container,
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh'
+      }}
+    >
       <h2 style={title}>📊 Your Analytics</h2>
 
       <div style={topRow}>
-        <div style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}>
+        <div
+          style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}
+          className="card-hover"
+          onClick={() => navigate('/meals')}
+        >
           🍽️ <strong>Total Meals Logged</strong>
           <div>{summary.mealCount}</div>
         </div>
 
-        <div style={{ ...card, backgroundColor: '#facc15' }}>
+        <div
+          style={{ ...card, backgroundColor: '#facc15' }}
+          className="card-hover"
+          onClick={() => navigate('/meals')}
+        >
           🔥 <strong>Calories In</strong>
           <div>{summary.caloriesIn} kcal</div>
         </div>
 
-        <div style={{ ...card, backgroundColor: '#34d399' }}>
+        <div
+          style={{ ...card, backgroundColor: '#34d399' }}
+          className="card-hover"
+          onClick={() => navigate('/workouts')}
+        >
           🏋️ <strong>Calories Out</strong>
           <div>{summary.caloriesOut} kcal</div>
         </div>
       </div>
 
       <div style={bottomRow}>
-        <div style={{ ...card, backgroundColor: '#818cf8' }}>
+        <div
+          style={{ ...card, backgroundColor: '#818cf8' }}
+          className="card-hover"
+          onClick={() => navigate('/sleep')}
+        >
           😴 <strong>Total Sleep Hours</strong>
           <div>{summary.sleepHours} h</div>
         </div>
 
-        <div style={{ ...card, backgroundColor: '#60a5fa' }}>
+        <div
+          style={{ ...card, backgroundColor: '#60a5fa' }}
+          className="card-hover"
+          onClick={() => navigate('/sleep')}
+        >
           💤 <strong>Avg Sleep</strong>
           <div>{summary.avgSleep} h/night</div>
         </div>
@@ -67,13 +99,16 @@ const Analytics = () => {
   );
 };
 
+// Styles
 const container = {
   padding: '2rem',
   textAlign: 'center'
 };
 
 const title = {
-  marginBottom: '2rem'
+  marginBottom: '2rem',
+  color: 'white',
+  textShadow: '2px 2px 4px rgba(0,0,0,0.4)'
 };
 
 const topRow = {
@@ -87,22 +122,25 @@ const bottomRow = {
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
-  marginTop: '2rem'
+  marginTop: '2rem',
+  flexWrap: 'wrap'
 };
 
 const card = {
-  width: '200px',
-  height: '120px',
+  width: '220px',
+  height: '140px',
   borderRadius: '12px',
   padding: '1rem',
   fontWeight: 'bold',
   fontSize: '1rem',
-  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  color: 'white'
+  color: 'white',
+  cursor: 'pointer',
+  transition: 'transform 0.2s ease-in-out'
 };
 
 export default Analytics;

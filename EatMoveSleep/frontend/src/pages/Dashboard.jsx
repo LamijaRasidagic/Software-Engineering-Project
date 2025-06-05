@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import image5 from '../assets/image5.jpg';
 
@@ -10,6 +10,22 @@ const Dashboard = () => {
   const [meals, setMeals] = useState([]);
   const [sleep, setSleep] = useState([]);
   const [waterCups, setWaterCups] = useState(6);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const lastY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY.current && y > 80) {
+        setShowWelcome(false);
+      } else {
+        setShowWelcome(true);
+      }
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('ems_logged_in') === 'true';
@@ -35,11 +51,16 @@ const Dashboard = () => {
     setSleep(storedSleep);
   }, [navigate]);
 
-  if (!user) return <p style={{ textAlign: 'center', fontFamily: "'Helvetica Neue', sans-serif", color: '#fff' }}>Loading Dashboard...</p>;
+  if (!user)
+    return (
+      <p style={{ textAlign: 'center', fontFamily: "'Helvetica Neue', sans-serif", color: '#fff' }}>
+        Loading Dashboard...
+      </p>
+    );
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', fontFamily: "'Helvetica Neue', sans-serif" }}>
-      {/* Blurred and darkened background layer */}
+      {/* Background */}
       <div
         style={{
           position: 'absolute',
@@ -55,34 +76,40 @@ const Dashboard = () => {
         }}
       />
 
-      {/* Foreground content */}
-      <div style={{ position: 'relative', zIndex: 1, color: 'white', padding: '2rem', maxWidth: '900px', margin: '0 auto' }}>
-        <header
+      {/* Welcome message below navbar */}
+      <div
+        style={{
+          position: 'fixed',
+          top: '60px',
+          left: 0,
+          width: '100%',
+          zIndex: 999,
+          transform: showWelcome ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.4s ease-in-out',
+        }}
+      >
+        <div
           style={{
-            backgroundColor: 'rgba(0, 170, 255, 0.85)',
-            padding: '1rem',
+            backgroundColor: 'rgba(0, 170, 255, 0.9)',
+            padding: '0.75rem 1rem',
             textAlign: 'center',
             color: 'white',
-            fontSize: '22px',
+            fontSize: '20px',
             fontWeight: 'bold',
-            position: 'sticky',
-            top: 0,
-            zIndex: 2,
             backdropFilter: 'blur(8px)',
-            marginBottom: '2rem',
-            borderRadius: '8px',
+            borderBottomLeftRadius: '8px',
+            borderBottomRightRadius: '8px',
           }}
         >
           Welcome to EatMoveSleep 🏃‍♂️
-        </header>
+        </div>
+      </div>
 
+      {/* Foreground content */}
+      <div style={{ position: 'relative', zIndex: 1, color: 'white', padding: '2rem', maxWidth: '900px', margin: '0 auto', paddingTop: '140px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           {image ? (
-            <img
-              src={image}
-              alt="Profile"
-              style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }}
-            />
+            <img src={image} alt="Profile" style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
           ) : (
             <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#ccc' }} />
           )}
@@ -119,15 +146,16 @@ const Dashboard = () => {
           gap: '2rem 4rem',
           justifyContent: 'center',
         }}>
-          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} color="#facc15" />
-          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} color="#4ade80" />
-          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} color="#818cf8" />
+          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} borderColor="#facc15" />
+          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} borderColor="#4ade80" />
+          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} borderColor="#818cf8" />
           <div
             style={{
               width: '260px',
               height: '140px',
-              backgroundColor: '#38bdf8',
-              borderRadius: '8px',
+              backgroundColor: 'white',
+              border: '4px solid #38bdf8',
+              borderRadius: '12px',
               padding: '1rem',
               fontWeight: 'bold',
               textAlign: 'center',
@@ -136,7 +164,8 @@ const Dashboard = () => {
               alignItems: 'center',
               justifyContent: 'center',
               lineHeight: 1.2,
-              color: 'white'
+              color: '#111',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
             }}
           >
             <p style={{ margin: 0, marginBottom: '8px' }}>Water</p>
@@ -173,13 +202,13 @@ const actionButton = {
 };
 
 const circleButton = {
-  width: '25px',
-  height: '25px',
+  width: '30px',
+  height: '30px',
   borderRadius: '50%',
   backgroundColor: 'white',
   color: '#38bdf8',
-  border: 'none',
-  fontSize: '1.0rem',
+  border: '2px solid #38bdf8',
+  fontSize: '1.2rem',
   fontWeight: 'bold',
   cursor: 'pointer',
   display: 'flex',
@@ -187,23 +216,25 @@ const circleButton = {
   justifyContent: 'center',
 };
 
-const StatBox = ({ label, value, color }) => (
+const StatBox = ({ label, value, borderColor }) => (
   <div style={{
     width: '260px',
     height: '140px',
-    backgroundColor: color,
-    borderRadius: '8px',
+    backgroundColor: 'white',
+    border: `4px solid ${borderColor}`,
+    borderRadius: '12px',
     padding: '1rem',
-    color: 'white',
+    color: '#111',
     fontWeight: 'bold',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
   }}>
     <p style={{ margin: 0 }}>{label}</p>
-    <h3 style={{ margin: '0.5rem 0 0' }}>{value}</h3>
+    <h3 style={{ margin: '0.5rem 0 0', fontSize: '24px' }}>{value}</h3>
   </div>
 );
 
