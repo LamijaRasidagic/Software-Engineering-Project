@@ -105,7 +105,7 @@ const Workouts = () => {
       <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '2rem' }}>🏋️ Create Workout</h2>
 
       <div style={formContainer}>
-        <input type="text" placeholder="Workout title (e.g. Leg Day)" value={workoutTitle} onChange={(e) => setWorkoutTitle(e.target.value)} style={inputStyle} />
+        <input type="text" placeholder="Workout title (e.g. Leg Day)" value={workoutTitle} onChange={(e) => setWorkoutTitle(e.target.value)} style={{ ...inputStyle, marginBottom: '1rem' }} />
 
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <input type="text" placeholder="Exercise name" value={exerciseInput} onChange={(e) => setExerciseInput(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
