@@ -47,47 +47,67 @@ const Analytics = () => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      paddingTop: '5rem'
+      position: 'relative',
     }}>
-      <h2 style={title}>📊 Your Analytics</h2>
+      <div style={overlay} />
 
-      <div style={topRow}>
-        <div style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }} onClick={() => navigate('/meals')}>
-          🍽️ <strong>Total Meals Logged</strong>
-          <div>{summary.mealCount}</div>
+      <div style={content}>
+        <h2 style={title}>📊 Your Analytics</h2>
+
+        <div style={topRow}>
+          <div style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }} onClick={() => navigate('/meals')}>
+            🍽️ <strong>Total Meals Logged</strong>
+            <div>{summary.mealCount}</div>
+          </div>
+
+          <div style={{ ...card, backgroundColor: '#facc15' }} onClick={() => navigate('/meals')}>
+            🔥 <strong>Calories In</strong>
+            <div>{summary.caloriesIn} kcal</div>
+          </div>
+
+          <div style={{ ...card, backgroundColor: '#34d399' }} onClick={() => navigate('/workouts')}>
+            🏋️ <strong>Calories Out</strong>
+            <div>{summary.caloriesOut} kcal</div>
+          </div>
         </div>
 
-        <div style={{ ...card, backgroundColor: '#facc15' }} onClick={() => navigate('/meals')}>
-          🔥 <strong>Calories In</strong>
-          <div>{summary.caloriesIn} kcal</div>
-        </div>
+        <div style={bottomRow}>
+          <div style={{ ...card, backgroundColor: '#818cf8' }} onClick={() => navigate('/sleep')}>
+            😴 <strong>Total Sleep Hours</strong>
+            <div>{summary.sleepHours} h</div>
+          </div>
 
-        <div style={{ ...card, backgroundColor: '#34d399' }} onClick={() => navigate('/workouts')}>
-          🏋️ <strong>Calories Out</strong>
-          <div>{summary.caloriesOut} kcal</div>
-        </div>
-      </div>
-
-      <div style={bottomRow}>
-        <div style={{ ...card, backgroundColor: '#818cf8' }} onClick={() => navigate('/sleep')}>
-          😴 <strong>Total Sleep Hours</strong>
-          <div>{summary.sleepHours} h</div>
-        </div>
-
-        <div style={{ ...card, backgroundColor: '#60a5fa' }} onClick={() => navigate('/sleep')}>
-          💤 <strong>Avg Sleep</strong>
-          <div>{summary.avgSleep} h/night</div>
+          <div style={{ ...card, backgroundColor: '#60a5fa' }} onClick={() => navigate('/sleep')}>
+            💤 <strong>Avg Sleep</strong>
+            <div>{summary.avgSleep} h/night</div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-const container = { textAlign: 'center' };
+const container = {
+  textAlign: 'center',
+  overflow: 'hidden'
+};
+
+const overlay = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  backdropFilter: 'blur(6px)',
+  zIndex: 1,
+};
+
+const content = {
+  position: 'relative',
+  zIndex: 2,
+  paddingTop: '5rem'
+};
 
 const title = {
   marginBottom: '2rem',
