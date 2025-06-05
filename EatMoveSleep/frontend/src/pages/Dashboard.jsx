@@ -142,21 +142,21 @@ const Dashboard = () => {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 260px)',
-          gap: '2rem 4rem',
+          gridTemplateColumns: 'repeat(2, 220px)',
+          gap: '2.5rem 2.5rem',
           justifyContent: 'center',
         }}>
-          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} borderColor="#facc15" />
-          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} borderColor="#4ade80" />
-          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} borderColor="#818cf8" />
+          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} borderColor="#fde68a" />
+          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} borderColor="#bbf7d0" />
+          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} borderColor="#c7d2fe" />
           <div
             style={{
-              width: '260px',
-              height: '140px',
+              width: '220px',
+              height: '120px',
               backgroundColor: 'white',
-              border: '4px solid #38bdf8',
-              borderRadius: '12px',
-              padding: '1rem',
+              border: '3.3px solid #60c5f9',
+              borderRadius: '10px',
+              padding: '0.8rem',
               fontWeight: 'bold',
               textAlign: 'center',
               display: 'flex',
@@ -165,12 +165,12 @@ const Dashboard = () => {
               justifyContent: 'center',
               lineHeight: 1.2,
               color: '#111',
-              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
             }}
           >
-            <p style={{ margin: 0, marginBottom: '8px' }}>Water</p>
-            <h3 style={{ margin: 0, marginBottom: '8px' }}>{waterCups}/8 Cups</h3>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <p style={{ margin: 0, marginBottom: '6px', fontSize: '14px' }}>Water</p>
+            <h3 style={{ margin: 0, marginBottom: '6px', fontSize: '20px' }}>{waterCups}/8 Cups</h3>
+            <div style={{ display: 'flex', gap: '0.8rem' }}>
               <button onClick={() => setWaterCups(w => Math.max(0, w - 1))} style={circleButton}>−</button>
               <button onClick={() => setWaterCups(w => Math.min(8, w + 1))} style={circleButton}>+</button>
             </div>
@@ -202,13 +202,13 @@ const actionButton = {
 };
 
 const circleButton = {
-  width: '30px',
-  height: '30px',
+  width: '26px',
+  height: '26px',
   borderRadius: '50%',
   backgroundColor: 'white',
-  color: '#38bdf8',
-  border: '2px solid #38bdf8',
-  fontSize: '1.2rem',
+  color: '#60c5f9',
+  border: '2px solid #60c5f9',
+  fontSize: '1rem',
   fontWeight: 'bold',
   cursor: 'pointer',
   display: 'flex',
@@ -218,12 +218,12 @@ const circleButton = {
 
 const StatBox = ({ label, value, borderColor }) => (
   <div style={{
-    width: '260px',
-    height: '140px',
+    width: '220px',
+    height: '120px',
     backgroundColor: 'white',
-    border: `4px solid ${borderColor}`,
-    borderRadius: '12px',
-    padding: '1rem',
+    border: `3.3px solid ${borderColor}`,
+    borderRadius: '10px',
+    padding: '0.8rem',
     color: '#111',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -231,10 +231,10 @@ const StatBox = ({ label, value, borderColor }) => (
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
   }}>
-    <p style={{ margin: 0 }}>{label}</p>
-    <h3 style={{ margin: '0.5rem 0 0', fontSize: '24px' }}>{value}</h3>
+    <p style={{ margin: 0, fontSize: '14px' }}>{label}</p>
+    <h3 style={{ margin: '0.4rem 0 0', fontSize: '20px' }}>{value}</h3>
   </div>
 );
 
