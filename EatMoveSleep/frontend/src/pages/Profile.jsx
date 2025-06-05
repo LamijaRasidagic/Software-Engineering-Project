@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
@@ -59,10 +59,10 @@ const Profile = () => {
         ) : (
           <div style={placeholderImage} />
         )}
-        <h2 style={{ marginTop: '1rem', color: 'white' }}>{user.name}</h2>
+        <h2 style={{ marginTop: '1rem', color: 'white', fontSize: '1.8rem' }}>{user.name}</h2>
 
         <label htmlFor="profileUpload" style={uploadLabel}>
-          Set Profile Picture
+          📸 Set Profile Picture
         </label>
         <input
           id="profileUpload"
@@ -74,20 +74,20 @@ const Profile = () => {
       </div>
 
       <div style={contentWrapper}>
-        <Section title="Account">
-          <Row icon="👤" label="Edit Profile" link="/edit-profile" />
+        <Section title="👤 Account">
+          <Row icon="📝" label="Edit Profile" link="/edit-profile" />
           <Row icon="🔔" label="Notifications" toggle checked={notifications} onToggle={toggleNotifications} />
         </Section>
 
-        <Section title="Health & Fitness">
+        <Section title="💪 Health & Fitness">
           <Row icon="📈" label="Current Status" link="/status" />
         </Section>
 
-        <Section title="Settings">
+        <Section title="⚙️ Settings">
           <Row icon="🔒" label="Privacy" link="/privacy" />
         </Section>
 
-        <Section title="Achievements">
+        <Section title="🏅 Achievements">
           <Row icon="🏆" label="Milestones" link="/milestones" />
           <Row icon="📅" label="Progress Summary" link="/summary" />
         </Section>
@@ -98,7 +98,7 @@ const Profile = () => {
 
 const Section = ({ title, children }) => (
   <div style={{ marginBottom: '2rem', width: '100%' }}>
-    <h3 style={{ fontSize: '1rem', color: '#4b5563', marginBottom: '0.5rem' }}>{title}</h3>
+    <h3 style={{ fontSize: '1.1rem', color: '#00aaff', marginBottom: '0.75rem', fontWeight: 'bold' }}>{title}</h3>
     <div style={cardStyle}>{children}</div>
   </div>
 );
@@ -111,10 +111,15 @@ const Row = ({ icon, label, toggle, link, checked = false, onToggle }) => {
   };
 
   return (
-    <div style={rowStyle} onClick={toggle ? null : handleClick}>
+    <div
+      style={{ ...rowStyle, transition: 'background 0.3s' }}
+      onClick={toggle ? null : handleClick}
+      onMouseEnter={(e) => !toggle && (e.currentTarget.style.background = '#f3f4f6')}
+      onMouseLeave={(e) => !toggle && (e.currentTarget.style.background = 'transparent')}
+    >
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <span style={{ fontSize: '1.2rem' }}>{icon}</span>
-        <span>{label}</span>
+        <span style={{ fontWeight: '500' }}>{label}</span>
       </div>
       {toggle ? (
         <input
@@ -126,13 +131,12 @@ const Row = ({ icon, label, toggle, link, checked = false, onToggle }) => {
           }}
         />
       ) : (
-        <span style={{ color: '#9ca3af' }}>{'>'}</span>
+        <span style={{ color: '#9ca3af', fontSize: '1.2rem' }}>{'>'}</span>
       )}
     </div>
   );
 };
 
-// Styles
 const container = {
   maxWidth: '960px',
   margin: '0 auto',
@@ -140,25 +144,27 @@ const container = {
 };
 
 const header = {
-  backgroundColor: '#3b82f6',
-  padding: '2rem 1rem',
+  background: 'linear-gradient(to right, #00aaff, #00aaff)',
+  padding: '2.5rem 1.5rem',
   textAlign: 'center',
-  borderRadius: '12px',
+  borderRadius: '16px',
   marginBottom: '2rem',
-  color: 'white'
+  color: 'white',
+  boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
 };
 
 const profileImage = {
-  width: '120px',
-  height: '120px',
+  width: '130px',
+  height: '130px',
   borderRadius: '50%',
   objectFit: 'cover',
-  border: '3px solid white'
+  border: '4px solid white',
+  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
 };
 
 const placeholderImage = {
-  width: '120px',
-  height: '120px',
+  width: '130px',
+  height: '130px',
   borderRadius: '50%',
   backgroundColor: '#e5e7eb',
   display: 'inline-block'
@@ -170,27 +176,28 @@ const uploadLabel = {
   padding: '10px 16px',
   backgroundColor: '#2563eb',
   color: 'white',
-  borderRadius: '6px',
+  borderRadius: '8px',
   cursor: 'pointer',
   fontWeight: 'bold',
-  fontSize: '0.9rem'
+  fontSize: '0.9rem',
+  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
 };
 
 const contentWrapper = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '1.5rem'
+  gap: '2rem'
 };
 
 const cardStyle = {
-  backgroundColor: '#f9fafb',
-  borderRadius: '8px',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+  backgroundColor: '#ffffff',
+  borderRadius: '12px',
+  boxShadow: '0 6px 12px rgba(0,0,0,0.05)',
   overflow: 'hidden'
 };
 
 const rowStyle = {
-  padding: '1rem',
+  padding: '1.1rem',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
