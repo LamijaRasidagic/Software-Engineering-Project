@@ -47,59 +47,81 @@ const Privacy = () => {
   };
 
   return (
-    <div style={container}>
-      <h2>🔒 Privacy Settings</h2>
-      <p>This app stores your data locally in your browser.</p>
+    <div style={wrapper}>
+      <div style={container}>
+        <h2>🔒 Privacy Settings</h2>
+        <p>This app stores your data locally in your browser.</p>
 
-      <button style={button} onClick={handleClearData}>Delete All My Data</button>
+        <button style={button} onClick={handleClearData}>Delete All My Data</button>
 
-      <hr style={{ margin: '2rem 0' }} />
+        <hr style={{ margin: '2rem 0' }} />
+        <h3>Change Password</h3>
 
-      <h3>Change Password</h3>
+        <div style={formBox}>
+          <input
+            type="password"
+            placeholder="Current Password"
+            value={currentPass}
+            onChange={(e) => setCurrentPass(e.target.value)}
+            style={input}
+          />
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPass}
+            onChange={(e) => setNewPass(e.target.value)}
+            style={input}
+          />
+          <input
+            type="password"
+            placeholder="Confirm New Password"
+            value={confirmPass}
+            onChange={(e) => setConfirmPass(e.target.value)}
+            style={input}
+          />
+          <button style={buttonSecondary} onClick={handlePasswordChange}>Update Password</button>
+        </div>
 
-      <input
-        type="password"
-        placeholder="Current Password"
-        value={currentPass}
-        onChange={(e) => setCurrentPass(e.target.value)}
-        style={input}
-      />
-      <input
-        type="password"
-        placeholder="New Password"
-        value={newPass}
-        onChange={(e) => setNewPass(e.target.value)}
-        style={input}
-      />
-      <input
-        type="password"
-        placeholder="Confirm New Password"
-        value={confirmPass}
-        onChange={(e) => setConfirmPass(e.target.value)}
-        style={input}
-      />
-
-      <button style={buttonSecondary} onClick={handlePasswordChange}>Update Password</button>
-
-      {message && <p style={{ marginTop: '1rem', color: '#ef4444' }}>{message}</p>}
+        {message && <p style={{ marginTop: '1rem', color: '#ef4444' }}>{message}</p>}
+      </div>
     </div>
   );
 };
 
+// Background
+const wrapper = {
+  minHeight: '100vh',
+  backgroundColor: '#00aaff',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '1rem'
+};
+
+// Inner container
 const container = {
+  width: '100%',
   maxWidth: '600px',
-  margin: '2rem auto',
-  padding: '1.5rem',
+  padding: '2rem',
   backgroundColor: '#f9fafb',
   borderRadius: '12px',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
   textAlign: 'center'
 };
 
+// Shorter password inputs container
+const formBox = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '0.5rem',
+  marginTop: '1rem'
+};
+
+// Input fields (shorter)
 const input = {
-  width: '100%',
+  width: '300px',
   padding: '10px',
-  margin: '0.5rem 0',
   border: '1px solid #ccc',
   borderRadius: '6px',
   fontSize: '1rem'
@@ -117,9 +139,10 @@ const button = {
 };
 
 const buttonSecondary = {
+  width: '350px',
   marginTop: '1rem',
-  padding: '10px 20px',
-  backgroundColor: '#3b82f6',
+  padding: '10px',
+  backgroundColor: '#00aaff',
   color: 'white',
   border: 'none',
   borderRadius: '6px',
