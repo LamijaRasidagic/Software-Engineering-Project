@@ -51,53 +51,68 @@ const CurrentStatus = () => {
     handleDeleteNote(index);
   };
 
-  if (!user) return <p style={{ textAlign: 'center' }}>Loading...</p>;
+  if (!user) return <p style={{ textAlign: 'center', color: 'white' }}>Loading...</p>;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '700px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>📈 Current Status</h2>
-      <div style={card}>
-        <p><strong>Name:</strong> {user.name}</p>
-        <p><strong>Date of Birth:</strong> {user.dob}</p>
-        <p><strong>Weight:</strong> {user.weight} kg</p>
-        <p><strong>Goal:</strong> {user.goal}</p>
-        <p><strong>Target Weight:</strong> {user.targetWeight} kg</p>
-        <p><strong>Experience:</strong> {user.experience}</p>
-      </div>
+    <div style={{ ...wrapper, backgroundColor: '#00aaff', color: 'white' }}>
+      <div style={container}>
+        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>📈 Current Status</h2>
+        <div style={card}>
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Date of Birth:</strong> {user.dob}</p>
+          <p><strong>Weight:</strong> {user.weight} kg</p>
+          <p><strong>Goal:</strong> {user.goal}</p>
+          <p><strong>Target Weight:</strong> {user.targetWeight} kg</p>
+          <p><strong>Experience:</strong> {user.experience}</p>
+        </div>
 
-      <div style={{ marginTop: '2rem' }}>
-        <h3>📝 My Daily Notes</h3>
-        <textarea
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          rows={6}
-          style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #ccc' }}
-        />
-        <button onClick={handleSaveNote} style={saveButton}>Save Note</button>
+        <div style={{ marginTop: '2rem' }}>
+          <h3>📝 My Daily Notes</h3>
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            rows={6}
+            style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #ccc', color: 'black' }}
+          />
+          <button onClick={handleSaveNote} style={saveButton}>Save Note</button>
 
-        {savedNotes.length > 0 && (
-          <div style={{ marginTop: '2rem' }}>
-            <h4>🗂 Saved Notes</h4>
-            {savedNotes.map((n, index) => (
-              <div key={index} style={noteBox}>
-                <p style={{ marginBottom: '0.5rem' }}><strong>{n.date}</strong></p>
-                <p style={{ marginBottom: '0.5rem' }}>{n.text}</p>
-                <button onClick={() => handleEditNote(index)} style={editButton}>Edit</button>
-                <button onClick={() => handleDeleteNote(index)} style={deleteButton}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
+          {savedNotes.length > 0 && (
+            <div style={{ marginTop: '2rem' }}>
+              <h4>🗂 Saved Notes</h4>
+              {savedNotes.map((n, index) => (
+                <div key={index} style={noteBox}>
+                  <p style={{ marginBottom: '0.5rem' }}><strong>{n.date}</strong></p>
+                  <p style={{ marginBottom: '0.5rem' }}>{n.text}</p>
+                  <button onClick={() => handleEditNote(index)} style={editButton}>Edit</button>
+                  <button onClick={() => handleDeleteNote(index)} style={deleteButton}>Delete</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
+};
+
+const wrapper = {
+  minHeight: '100vh',
+  paddingTop: '3rem',
+  paddingBottom: '3rem'
+};
+
+const container = {
+  maxWidth: '700px',
+  margin: '0 auto',
+  padding: '2rem'
 };
 
 const card = {
   backgroundColor: '#f3f4f6',
   padding: '1.5rem',
   borderRadius: '12px',
-  boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
+  boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+  color: 'black'
 };
 
 const saveButton = {
@@ -134,7 +149,8 @@ const noteBox = {
   padding: '1rem',
   borderRadius: '8px',
   border: '1px solid #e5e7eb',
-  marginBottom: '1rem'
+  marginBottom: '1rem',
+  color: 'black'
 };
 
 export default CurrentStatus;
