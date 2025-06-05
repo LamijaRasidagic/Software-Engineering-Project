@@ -146,15 +146,16 @@ const Dashboard = () => {
           gap: '2rem 4rem',
           justifyContent: 'center',
         }}>
-          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} color="#facc15" />
-          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} color="#4ade80" />
-          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} color="#818cf8" />
+          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} borderColor="#facc15" />
+          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} borderColor="#4ade80" />
+          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} borderColor="#818cf8" />
           <div
             style={{
               width: '260px',
               height: '140px',
-              backgroundColor: '#38bdf8',
-              borderRadius: '8px',
+              backgroundColor: 'white',
+              border: '4px solid #38bdf8',
+              borderRadius: '12px',
               padding: '1rem',
               fontWeight: 'bold',
               textAlign: 'center',
@@ -163,7 +164,8 @@ const Dashboard = () => {
               alignItems: 'center',
               justifyContent: 'center',
               lineHeight: 1.2,
-              color: 'white'
+              color: '#111',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
             }}
           >
             <p style={{ margin: 0, marginBottom: '8px' }}>Water</p>
@@ -200,13 +202,13 @@ const actionButton = {
 };
 
 const circleButton = {
-  width: '25px',
-  height: '25px',
+  width: '30px',
+  height: '30px',
   borderRadius: '50%',
   backgroundColor: 'white',
   color: '#38bdf8',
-  border: 'none',
-  fontSize: '1.0rem',
+  border: '2px solid #38bdf8',
+  fontSize: '1.2rem',
   fontWeight: 'bold',
   cursor: 'pointer',
   display: 'flex',
@@ -214,23 +216,25 @@ const circleButton = {
   justifyContent: 'center',
 };
 
-const StatBox = ({ label, value, color }) => (
+const StatBox = ({ label, value, borderColor }) => (
   <div style={{
     width: '260px',
     height: '140px',
-    backgroundColor: color,
-    borderRadius: '8px',
+    backgroundColor: 'white',
+    border: `4px solid ${borderColor}`,
+    borderRadius: '12px',
     padding: '1rem',
-    color: 'white',
+    color: '#111',
     fontWeight: 'bold',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.06)'
   }}>
     <p style={{ margin: 0 }}>{label}</p>
-    <h3 style={{ margin: '0.5rem 0 0' }}>{value}</h3>
+    <h3 style={{ margin: '0.5rem 0 0', fontSize: '24px' }}>{value}</h3>
   </div>
 );
 
