@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import image7 from '../assets/image7.jpg'; // provjeri da postoji
 
 const Sleep = () => {
   const navigate = useNavigate();
@@ -49,36 +50,47 @@ const Sleep = () => {
   };
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>😴 Sleep Tracker</h2>
+    <div
+      style={{
+        backgroundImage: `url(${image7})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        padding: '3rem 1rem'
+      }}
+    >
+      <div style={formWrapper}>
+        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>😴 Sleep Tracker</h2>
+        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            style={inputStyle}
+          />
+          <input
+            type="number"
+            placeholder="Hours slept"
+            value={hours}
+            onChange={(e) => setHours(e.target.value)}
+            style={inputStyle}
+          />
+          <input
+            type="number"
+            placeholder="Sleep quality (1–5)"
+            value={quality}
+            onChange={(e) => setQuality(e.target.value)}
+            min="1"
+            max="5"
+            style={inputStyle}
+          />
+          <button type="submit" style={buttonStyleBlue}>Add Sleep Record</button>
+        </form>
+      </div>
 
-      <form onSubmit={handleAdd} style={formContainer}>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          style={inputStyle}
-        />
-        <input
-          type="number"
-          placeholder="Hours slept"
-          value={hours}
-          onChange={(e) => setHours(e.target.value)}
-          style={inputStyle}
-        />
-        <input
-          type="number"
-          placeholder="Sleep quality (1–5)"
-          value={quality}
-          onChange={(e) => setQuality(e.target.value)}
-          min="1"
-          max="5"
-          style={inputStyle}
-        />
-        <button type="submit" style={buttonStyleGreen}>Add Sleep Record</button>
-      </form>
-
-      <h3 style={{ textAlign: 'center', marginTop: '3rem' }}>Saved Sleep Records</h3>
+      <h3 style={{ textAlign: 'center', margin: '3rem 0 1rem', color: 'white' }}>
+        Saved Sleep Records
+      </h3>
 
       <div style={gridStyle}>
         {records.map((r) => (
@@ -95,49 +107,52 @@ const Sleep = () => {
 };
 
 // Styles
-const formContainer = {
-  maxWidth: '500px',
-  margin: '0 auto',
-  backgroundColor: '#f9fafb',
-  padding: '1.5rem',
+const formWrapper = {
+  maxWidth: '460px',
+  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+  padding: '2rem',
   borderRadius: '10px',
-  boxShadow: '0 4px 10px rgba(0,0,0,0.06)'
+  margin: '0 auto',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
 };
 
 const inputStyle = {
-  display: 'block',
   width: '100%',
   padding: '12px',
-  marginBottom: '1rem',
   borderRadius: '8px',
   border: '1px solid #ccc',
-  fontSize: '1rem'
+  fontSize: '1rem',
+  boxSizing: 'border-box'
 };
 
-const buttonStyleGreen = {
+const buttonStyleBlue = {
   padding: '12px',
   width: '100%',
   border: 'none',
   borderRadius: '8px',
-  backgroundColor: '#16a34a',
+  backgroundColor: '#3b82f6',
   color: 'white',
   fontWeight: 'bold',
   cursor: 'pointer'
 };
 
 const gridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
   gap: '1.5rem',
-  marginTop: '1rem'
+  padding: '0 1rem 4rem'
 };
 
 const cardStyle = {
   backgroundColor: '#f3f4f6',
-  borderRadius: '10px',
-  padding: '1rem',
+  borderRadius: '12px',
+  padding: '1rem 1.5rem',
   textAlign: 'left',
-  boxShadow: '0 2px 6px rgba(0,0,0,0.08)'
+  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+  fontSize: '0.95rem',
+  maxWidth: '500px',
+  width: '100%'
 };
 
 const deleteStyle = {
