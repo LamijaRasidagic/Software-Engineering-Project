@@ -36,89 +36,130 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        ...container,
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop: '5rem'
-      }}
-    >
-      <h2 style={title}>📊 Your Analytics</h2>
+    <div style={wrapper}>
+      {/* Background Blur */}
+      <div style={{ ...bgImage, backgroundImage: `url(${background})` }} />
+      {/* Dark Overlay */}
+      <div style={blackOverlay} />
 
-      <div style={topRow}>
-        <div
-          style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}
-          onClick={() => navigate('/meals')}
-        >
-          🍽️ <strong>Total Meals Logged</strong>
-          <div>{summary.mealCount}</div>
-        </div>
+      {/* Foreground Content (aligned to top again) */}
+      <div style={contentTop}>
+        <h2 style={title}>📊 Your Analytics</h2>
 
-        <div
-          style={{ ...card, backgroundColor: '#facc15' }}
-          onClick={() => navigate('/meals')}
-        >
-          🔥 <strong>Calories In</strong>
-          <div>{summary.caloriesIn} kcal</div>
-        </div>
+        <div style={grid}>
+          <div style={cardRow}>
+            <AnalyticsCard
+              label="Total Meals Logged"
+              icon="🍽️"
+              value={summary.mealCount}
+              bgColor="#d1d5db"
+              color="#111827"
+              onClick={() => navigate('/meals')}
+            />
+            <AnalyticsCard
+              label="Calories In"
+              icon="🔥"
+              value={`${summary.caloriesIn} kcal`}
+              bgColor="#facc15"
+              onClick={() => navigate('/meals')}
+            />
+            <AnalyticsCard
+              label="Calories Out"
+              icon="🏋️"
+              value={`${summary.caloriesOut} kcal`}
+              bgColor="#34d399"
+              onClick={() => navigate('/workouts')}
+            />
+          </div>
 
-        <div
-          style={{ ...card, backgroundColor: '#34d399' }}
-          onClick={() => navigate('/workouts')}
-        >
-          🏋️ <strong>Calories Out</strong>
-          <div>{summary.caloriesOut} kcal</div>
-        </div>
-      </div>
-
-      <div style={bottomRow}>
-        <div
-          style={{ ...card, backgroundColor: '#818cf8' }}
-          onClick={() => navigate('/sleep')}
-        >
-          😴 <strong>Total Sleep Hours</strong>
-          <div>{summary.sleepHours} h</div>
-        </div>
-
-        <div
-          style={{ ...card, backgroundColor: '#60a5fa' }}
-          onClick={() => navigate('/sleep')}
-        >
-          💤 <strong>Avg Sleep</strong>
-          <div>{summary.avgSleep} h/night</div>
+          <div style={cardRow}>
+            <AnalyticsCard
+              label="Total Sleep Hours"
+              icon="😴"
+              value={`${summary.sleepHours} h`}
+              bgColor="#818cf8"
+              onClick={() => navigate('/sleep')}
+            />
+            <AnalyticsCard
+              label="Avg Sleep"
+              icon="💤"
+              value={`${summary.avgSleep} h/night`}
+              bgColor="#60a5fa"
+              onClick={() => navigate('/sleep')}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
+const AnalyticsCard = ({ label, icon, value, bgColor, color = 'white', onClick }) => (
+  <div
+    style={{
+      ...card,
+      backgroundColor: bgColor,
+      color
+    }}
+    onClick={onClick}
+  >
+    {icon} <strong>{label}</strong>
+    <div>{value}</div>
+  </div>
+);
+
 // Styles
-const container = {
-  textAlign: 'center'
+const wrapper = {
+  position: 'relative',
+  width: '100%',
+  minHeight: '100vh',
+  overflow: 'hidden',
+};
+
+const bgImage = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  filter: 'blur(6px)',
+  zIndex: 0,
+};
+
+const blackOverlay = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  zIndex: 1,
+};
+
+const contentTop = {
+  position: 'relative',
+  zIndex: 2,
+  textAlign: 'center',
+  padding: '4rem 2rem 2rem',
 };
 
 const title = {
   marginBottom: '2rem',
+  fontSize: '28px',
   color: 'white',
-  textShadow: '2px 2px 4px rgba(0,0,0,0.4)'
+  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
 };
 
-const topRow = {
+const grid = {
   display: 'flex',
-  justifyContent: 'center',
+  flexDirection: 'column',
   gap: '2rem',
-  flexWrap: 'wrap',
-  marginBottom: '2rem'
+  alignItems: 'center'
 };
 
-const bottomRow = {
+const cardRow = {
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
@@ -132,12 +173,11 @@ const card = {
   padding: '1rem',
   fontWeight: 'bold',
   fontSize: '1rem',
-  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  color: 'white',
   cursor: 'pointer',
   transition: 'transform 0.2s ease-in-out'
 };
