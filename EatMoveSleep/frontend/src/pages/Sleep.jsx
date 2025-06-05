@@ -4,7 +4,7 @@ import background from '../assets/image8.jpg';
 
 const Sleep = () => {
   const navigate = useNavigate();
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState('');i
   const [hours, setHours] = useState('');
   const [quality, setQuality] = useState('');
   const [records, setRecords] = useState([]);
