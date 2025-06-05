@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import image7 from '../assets/image7.jpg'; // provjeri da postoji
+import background from '../assets/plava.jpg';
 
 const Sleep = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Sleep = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${image7})`,
+        backgroundImage: `url(${background})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '100vh',
