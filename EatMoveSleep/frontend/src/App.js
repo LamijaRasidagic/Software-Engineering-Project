@@ -13,7 +13,9 @@ import Analytics from './pages/Analytics';
 import EditProfile from './pages/EditProfile';
 import Logout from './pages/Logout';
 import CurrentStatus from './pages/CurrentStatus';
-import Customization from './pages/Customization';
+import Privacy from './pages/Privacy';
+import Milestones from './pages/Milestones';
+import ProgressSummary from './pages/ProgressSummary';
 
 import TopNavbar from './components/TopNavbar';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -52,6 +54,9 @@ function Layout() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         <Route path="/status" element={<ProtectedRoute><CurrentStatus /></ProtectedRoute>} />
+        <Route path="/privacy" element={<ProtectedRoute><Privacy /></ProtectedRoute>} />
+        <Route path="/milestones" element={<ProtectedRoute><Milestones /></ProtectedRoute>} />
+        <Route path="/progressSummary" element={<ProtectedRoute><ProgressSummary /></ProtectedRoute>} />
 
         {/* Fallback za nepostojeće rute */}
         <Route path="*" element={<Naslovna />} />

@@ -60,7 +60,17 @@ const Profile = () => {
           <div style={placeholderImage} />
         )}
         <h2 style={{ marginTop: '1rem', color: 'white' }}>{user.name}</h2>
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
+
+        <label htmlFor="profileUpload" style={uploadLabel}>
+          Set Profile Picture
+        </label>
+        <input
+          id="profileUpload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          style={{ display: 'none' }}
+        />
       </div>
 
       <div style={contentWrapper}>
@@ -74,13 +84,12 @@ const Profile = () => {
         </Section>
 
         <Section title="Settings">
-          <Row icon="⚙️" label="Customization" />
-          <Row icon="🔒" label="Privacy" />
+          <Row icon="🔒" label="Privacy" link="/privacy" />
         </Section>
 
         <Section title="Achievements">
-          <Row icon="🏆" label="Milestones" />
-          <Row icon="📅" label="Progress Summary" />
+          <Row icon="🏆" label="Milestones" link="/milestones" />
+          <Row icon="📅" label="Progress Summary" link="/summary" />
         </Section>
       </div>
     </div>
@@ -153,6 +162,18 @@ const placeholderImage = {
   borderRadius: '50%',
   backgroundColor: '#e5e7eb',
   display: 'inline-block'
+};
+
+const uploadLabel = {
+  display: 'inline-block',
+  marginTop: '1rem',
+  padding: '10px 16px',
+  backgroundColor: '#2563eb',
+  color: 'white',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  fontWeight: 'bold',
+  fontSize: '0.9rem'
 };
 
 const contentWrapper = {

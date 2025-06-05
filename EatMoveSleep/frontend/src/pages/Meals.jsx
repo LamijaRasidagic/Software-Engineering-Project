@@ -7,7 +7,7 @@ import grilledsalmon from '../assets/grilledsalmon.jpg';
 import avocadotoast from '../assets/avocadotoast.jpg';
 import turkeysandwich from '../assets/turkeysandwich.jpg';
 import pasta from '../assets/pasta.jpg';
-import image5 from '../assets/image5.jpg';
+import image5 from '../assets/image6.jpg';
 
 const defaultRecipes = [
   { name: 'Oatmeal with banana', calories: 300, category: 'Breakfast', image: oatmeal },
