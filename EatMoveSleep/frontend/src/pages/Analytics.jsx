@@ -1,80 +1,108 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Analytics = () => {
-  const [totalMeals, setTotalMeals] = useState(0);
-  const [caloriesIn, setCaloriesIn] = useState(0);
-  const [caloriesOut, setCaloriesOut] = useState(0);
-  const [sleepHours, setSleepHours] = useState(0);
-  const [sleepRecords, setSleepRecords] = useState(0);
-  const navigate = useNavigate();
+  const [summary, setSummary] = useState({
+    mealCount: 0,
+    caloriesIn: 0,
+    caloriesOut: 0,
+    sleepHours: 0,
+    avgSleep: 0
+  });
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('ems_logged_in') === 'true';
     const email = localStorage.getItem('ems_logged_in_email');
-    if (!isLoggedIn || !email) {
-      alert('You must be logged in to access Analytics.');
-      navigate('/login');
-      return;
-    }
+    if (!email) return;
 
-    // Meals
-    const allMeals = JSON.parse(localStorage.getItem('ems_meals')) || [];
-    const meals = allMeals.filter((m) => m.email === email);
-    setTotalMeals(meals.length);
-    const totalIn = meals.reduce((sum, m) => sum + (m.calories || 0), 0);
-    setCaloriesIn(totalIn);
+    const meals = JSON.parse(localStorage.getItem(`ems_meals_${email}`)) || [];
+    const workouts = JSON.parse(localStorage.getItem(`ems_workouts_${email}`)) || [];
+    const sleep = JSON.parse(localStorage.getItem(`ems_sleep_${email}`)) || [];
 
-    // Workouts
-    const allWorkouts = JSON.parse(localStorage.getItem('ems_workouts')) || [];
-    const workouts = allWorkouts.filter((w) => w.email === email);
-    const totalOut = workouts.reduce((sum, w) => sum + (w.calories || 0), 0);
-    setCaloriesOut(totalOut);
-
-    // Sleep
-    const allSleep = JSON.parse(localStorage.getItem('ems_sleep')) || [];
-    const sleep = allSleep.filter((s) => s.email === email);
+    const caloriesIn = meals.reduce((sum, m) => sum + (m.calories || 0), 0);
+    const caloriesOut = workouts.reduce((sum, w) => sum + (w.durationMinutes || 0), 0);
     const totalSleep = sleep.reduce((sum, s) => sum + (s.hours || 0), 0);
-    setSleepHours(totalSleep);
-    setSleepRecords(sleep.length);
-  }, [navigate]);
+    const avgSleep = sleep.length ? (totalSleep / sleep.length).toFixed(1) : 0;
 
-  const avgSleep = sleepRecords > 0 ? (sleepHours / sleepRecords).toFixed(1) : 0;
+    setSummary({
+      mealCount: meals.length,
+      caloriesIn,
+      caloriesOut,
+      sleepHours: totalSleep,
+      avgSleep
+    });
+  }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>📊 Your Analytics</h2>
+    <div style={container}>
+      <h2 style={title}>📊 Your Analytics</h2>
 
-      <div style={gridStyle}>
-        <StatBox label="🍽 Total Meals Logged" value={totalMeals} />
-        <StatBox label="🔥 Calories In" value={`${caloriesIn} kcal`} color="#fbbf24" />
-        <StatBox label="🏋️ Calories Out" value={`${caloriesOut} kcal`} color="#34d399" />
-        <StatBox label="😴 Total Sleep Hours" value={`${sleepHours} h`} color="#818cf8" />
-        <StatBox label="🛏 Avg Sleep" value={`${avgSleep} h/night`} color="#60a5fa" />
+      <div style={topRow}>
+        <div style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}>
+          🍽️ <strong>Total Meals Logged</strong>
+          <div>{summary.mealCount}</div>
+        </div>
+
+        <div style={{ ...card, backgroundColor: '#facc15' }}>
+          🔥 <strong>Calories In</strong>
+          <div>{summary.caloriesIn} kcal</div>
+        </div>
+
+        <div style={{ ...card, backgroundColor: '#34d399' }}>
+          🏋️ <strong>Calories Out</strong>
+          <div>{summary.caloriesOut} kcal</div>
+        </div>
+      </div>
+
+      <div style={bottomRow}>
+        <div style={{ ...card, backgroundColor: '#818cf8' }}>
+          😴 <strong>Total Sleep Hours</strong>
+          <div>{summary.sleepHours} h</div>
+        </div>
+
+        <div style={{ ...card, backgroundColor: '#60a5fa' }}>
+          💤 <strong>Avg Sleep</strong>
+          <div>{summary.avgSleep} h/night</div>
+        </div>
       </div>
     </div>
   );
 };
 
-const StatBox = ({ label, value, color = '#e5e7eb' }) => (
-  <div style={{
-    backgroundColor: color,
-    padding: '1.5rem',
-    borderRadius: '12px',
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
-  }}>
-    <p style={{ margin: 0 }}>{label}</p>
-    <h3 style={{ marginTop: '0.5rem' }}>{value}</h3>
-  </div>
-);
+const container = {
+  padding: '2rem',
+  textAlign: 'center'
+};
 
-const gridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-  gap: '1.5rem'
+const title = {
+  marginBottom: '2rem'
+};
+
+const topRow = {
+  display: 'flex',
+  justifyContent: 'center',
+  gap: '2rem',
+  flexWrap: 'wrap'
+};
+
+const bottomRow = {
+  display: 'flex',
+  justifyContent: 'center',
+  gap: '2rem',
+  marginTop: '2rem'
+};
+
+const card = {
+  width: '200px',
+  height: '120px',
+  borderRadius: '12px',
+  padding: '1rem',
+  fontWeight: 'bold',
+  fontSize: '1rem',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'white'
 };
 
 export default Analytics;
