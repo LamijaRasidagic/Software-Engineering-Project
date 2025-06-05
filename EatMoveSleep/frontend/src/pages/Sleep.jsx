@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import background from '../assets/image7.jpg'; 
+import background from '../assets/image8.jpg'; 
 
 const Sleep = () => {
   const navigate = useNavigate();

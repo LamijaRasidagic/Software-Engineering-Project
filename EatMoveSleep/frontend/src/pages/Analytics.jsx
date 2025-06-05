@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import background from '../assets/plava.jpg'; // nova pozadina
+import background from '../assets/image9.jpg';
 
 const Analytics = () => {
   const [summary, setSummary] = useState({
@@ -42,7 +42,12 @@ const Analytics = () => {
         backgroundImage: `url(${background})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '100vh'
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: '5rem'
       }}
     >
       <h2 style={title}>📊 Your Analytics</h2>
@@ -50,7 +55,6 @@ const Analytics = () => {
       <div style={topRow}>
         <div
           style={{ ...card, backgroundColor: '#d1d5db', color: '#111827' }}
-          className="card-hover"
           onClick={() => navigate('/meals')}
         >
           🍽️ <strong>Total Meals Logged</strong>
@@ -59,7 +63,6 @@ const Analytics = () => {
 
         <div
           style={{ ...card, backgroundColor: '#facc15' }}
-          className="card-hover"
           onClick={() => navigate('/meals')}
         >
           🔥 <strong>Calories In</strong>
@@ -68,7 +71,6 @@ const Analytics = () => {
 
         <div
           style={{ ...card, backgroundColor: '#34d399' }}
-          className="card-hover"
           onClick={() => navigate('/workouts')}
         >
           🏋️ <strong>Calories Out</strong>
@@ -79,7 +81,6 @@ const Analytics = () => {
       <div style={bottomRow}>
         <div
           style={{ ...card, backgroundColor: '#818cf8' }}
-          className="card-hover"
           onClick={() => navigate('/sleep')}
         >
           😴 <strong>Total Sleep Hours</strong>
@@ -88,7 +89,6 @@ const Analytics = () => {
 
         <div
           style={{ ...card, backgroundColor: '#60a5fa' }}
-          className="card-hover"
           onClick={() => navigate('/sleep')}
         >
           💤 <strong>Avg Sleep</strong>
@@ -101,7 +101,6 @@ const Analytics = () => {
 
 // Styles
 const container = {
-  padding: '2rem',
   textAlign: 'center'
 };
 
@@ -115,14 +114,14 @@ const topRow = {
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
+  marginBottom: '2rem'
 };
 
 const bottomRow = {
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
-  marginTop: '2rem',
   flexWrap: 'wrap'
 };
 
