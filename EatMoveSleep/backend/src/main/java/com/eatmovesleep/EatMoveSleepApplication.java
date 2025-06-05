@@ -5,12 +5,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@EntityScan("com.your.other.entity.package")
+@EntityScan
+@Configuration
 @SpringBootApplication
 @RestController
+@ComponentScan
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.eatmovesleep.repository")
 public class EatMoveSleepApplication {
 
 	public static void main(String[] args) {
