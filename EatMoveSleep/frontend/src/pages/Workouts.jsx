@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import image5 from '../assets/image5.jpg';
+import image6 from '../assets/image6.jpg';
 import triceps from '../assets/triceps.jpg';
 import biceps from '../assets/biceps.jpg';
 import shoulderpress from '../assets/shoulderpress.jpg';
@@ -94,7 +94,7 @@ const Workouts = () => {
   return (
     <div style={{
       fontFamily: 'sans-serif',
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0,0,0,0.6)), url(${image5})`,
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0,0,0,0.6)), url(${image6})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -195,7 +195,7 @@ const buttonStyleBlue = {
   padding: '10px 16px',
   border: 'none',
   borderRadius: '8px',
-  backgroundColor: '#3b82f6',
+  backgroundColor: '#00aaff',
   color: 'white',
   fontWeight: 'bold',
   cursor: 'pointer'
@@ -207,7 +207,7 @@ const buttonStyleGreen = {
   width: '100%',
   border: 'none',
   borderRadius: '8px',
-  backgroundColor: '#16a34a',
+  backgroundColor: '#00aaff',
   color: 'white',
   fontWeight: 'bold',
   cursor: 'pointer'
