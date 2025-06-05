@@ -20,7 +20,7 @@ const Naslovna = () => {
         <div className="hero-overlay">
           <h1 className="hero-title">
             Your Health, Your Rules.<br />
-            Track, <span className="highlight">Improve</span>, And Thrive—All Offline & Secure.
+            Track, <span className="highlight">Improve</span>, And Thrive.
           </h1>
           <p className="hero-subtitle">
             Eat, Move, Sleep—track your wellness privately and <span className="underline-accent">effortlessly</span>.

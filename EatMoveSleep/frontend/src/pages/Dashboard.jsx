@@ -107,7 +107,7 @@ setSleep(storedSleep);
             <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#ccc' }} />
           )}
           <div>
-            <h2 style={{ margin: 0, color: 'white' }}>Good Morning ☀️</h2>
+            <h2 style={{ margin: 0, color: 'white' }}>Good Afternoon ☀️</h2>
             <p style={{ margin: 0, color: 'white' }}>{user.name}</p>
           </div>
         </div>
