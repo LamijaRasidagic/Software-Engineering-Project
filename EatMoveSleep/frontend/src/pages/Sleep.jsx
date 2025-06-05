@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import background from '../assets/plava.jpg';
+import background from '../assets/image7.jpg'; 
 
 const Sleep = () => {
   const navigate = useNavigate();
@@ -50,63 +50,85 @@ const Sleep = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        padding: '3rem 1rem'
-      }}
-    >
-      <div style={formWrapper}>
-        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>😴 Sleep Tracker</h2>
-        <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            style={inputStyle}
-          />
-          <input
-            type="number"
-            placeholder="Hours slept"
-            value={hours}
-            onChange={(e) => setHours(e.target.value)}
-            style={inputStyle}
-          />
-          <input
-            type="number"
-            placeholder="Sleep quality (1–5)"
-            value={quality}
-            onChange={(e) => setQuality(e.target.value)}
-            min="1"
-            max="5"
-            style={inputStyle}
-          />
-          <button type="submit" style={buttonStyleBlue}>Add Sleep Record</button>
-        </form>
-      </div>
+    <div style={wrapperStyle}>
+      <div style={overlayStyle}></div>
 
-      <h3 style={{ textAlign: 'center', margin: '3rem 0 1rem', color: 'white' }}>
-        Saved Sleep Records
-      </h3>
+      <div style={contentWrapper}>
+        <div style={formWrapper}>
+          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>😴 Sleep Tracker</h2>
+          <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              style={inputStyle}
+            />
+            <input
+              type="number"
+              placeholder="Hours slept"
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              style={inputStyle}
+            />
+            <input
+              type="number"
+              placeholder="Sleep quality (1–5)"
+              value={quality}
+              onChange={(e) => setQuality(e.target.value)}
+              min="1"
+              max="5"
+              style={inputStyle}
+            />
+            <button type="submit" style={buttonStyleBlue}>Add Sleep Record</button>
+          </form>
+        </div>
 
-      <div style={gridStyle}>
-        {records.map((r) => (
-          <div key={r.id} style={cardStyle}>
-            <h4>🛏 {r.date}</h4>
-            <p><strong>Hours:</strong> {r.hours} h</p>
-            <p><strong>Quality:</strong> {r.quality}/5</p>
-            <button onClick={() => handleDelete(r.id)} style={deleteStyle}>Delete</button>
-          </div>
-        ))}
+        <h3 style={{ textAlign: 'center', margin: '3rem 0 1rem', color: 'white' }}>
+          Saved Sleep Records
+        </h3>
+
+        <div style={gridStyle}>
+          {records.map((r) => (
+            <div key={r.id} style={cardStyle}>
+              <h4>🛏 {r.date}</h4>
+              <p><strong>Hours:</strong> {r.hours} h</p>
+              <p><strong>Quality:</strong> {r.quality}/5</p>
+              <button onClick={() => handleDelete(r.id)} style={deleteStyle}>Delete</button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 // Styles
+const wrapperStyle = {
+  backgroundImage: `url(${background})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  minHeight: '100vh',
+  position: 'relative',
+  overflow: 'hidden'
+};
+
+const overlayStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.6)', // crni overlay
+  backdropFilter: 'blur(3px)',
+  zIndex: 0
+};
+
+const contentWrapper = {
+  position: 'relative',
+  zIndex: 1,
+  padding: '3rem 1rem'
+};
+
 const formWrapper = {
   maxWidth: '460px',
   backgroundColor: 'rgba(255, 255, 255, 0.95)',
