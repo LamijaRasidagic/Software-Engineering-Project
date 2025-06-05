@@ -43,51 +43,59 @@ const EditProfile = () => {
       u.email === email ? { ...formData } : u
     );
     localStorage.setItem('ems_users', JSON.stringify(updatedUsers));
-    localStorage.setItem('ems_logged_in_email', formData.email); // update email if changed
+    localStorage.setItem('ems_logged_in_email', formData.email);
     alert('Profile updated successfully!');
     navigate('/profile');
   };
 
   return (
-    <div style={container}>
-      <h2>Edit Profile</h2>
-      <div style={form}>
-        {[
-          { label: 'Full Name', name: 'name', type: 'text' },
-          { label: 'Date of Birth', name: 'dob', type: 'date' },
-          { label: 'Current Weight (kg)', name: 'weight', type: 'number' },
-          { label: 'Goal (lose/gain)', name: 'goal', type: 'text' },
-          { label: 'Target Weight (kg)', name: 'targetWeight', type: 'number' },
-          { label: 'Experience (beginner/advanced)', name: 'experience', type: 'text' },
-          { label: 'Email', name: 'email', type: 'email' },
-          { label: 'Password', name: 'password', type: 'password' }
-        ].map(({ label, name, type }) => (
-          <div key={name} style={field}>
-            <label style={labelStyle}>{label}</label>
-            <input
-              type={type}
-              name={name}
-              value={formData[name]}
-              onChange={handleChange}
-              style={input}
-            />
-          </div>
-        ))}
+    <div style={{ ...wrapper, backgroundColor: '#00aaff' }}>
+      <div style={container}>
+        <h2>Edit Profile</h2>
+        <div style={form}>
+          {[
+            { label: 'Full Name', name: 'name', type: 'text' },
+            { label: 'Date of Birth', name: 'dob', type: 'date' },
+            { label: 'Current Weight (kg)', name: 'weight', type: 'number' },
+            { label: 'Goal (lose/gain)', name: 'goal', type: 'text' },
+            { label: 'Target Weight (kg)', name: 'targetWeight', type: 'number' },
+            { label: 'Experience (beginner/advanced)', name: 'experience', type: 'text' },
+            { label: 'Email', name: 'email', type: 'email' },
+            { label: 'Password', name: 'password', type: 'password' }
+          ].map(({ label, name, type }) => (
+            <div key={name} style={field}>
+              <label style={labelStyle}>{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                style={input}
+              />
+            </div>
+          ))}
 
-        <button onClick={handleSave} style={button}>Save Changes</button>
+          <button onClick={handleSave} style={button}>Save Changes</button>
+        </div>
       </div>
     </div>
   );
 };
 
 // Styles
+const wrapper = {
+  minHeight: '100vh',
+  paddingTop: '3rem',
+  paddingBottom: '3rem'
+};
+
 const container = {
   maxWidth: '600px',
-  margin: '2rem auto',
+  margin: '0 auto',
   padding: '2rem',
   border: '1px solid #ccc',
   borderRadius: '12px',
-  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
   backgroundColor: '#fff'
 };
 
