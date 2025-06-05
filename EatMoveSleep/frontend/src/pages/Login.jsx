@@ -30,10 +30,9 @@ const Login = () => {
 
   return (
     <div className="login-fullscreen-wrapper">
-      <div
-        className="login-background-image"
-        style={{ backgroundImage: `url(${image3})` }}
-      ></div>
+      <div className="login-background-image" style={{ backgroundImage: `url(${image3})` }}>
+        <div className="login-dark-overlay"></div>
+      </div>
 
       <div className="login-content-overlay">
         <div className="login-form-container">
@@ -66,7 +65,9 @@ const Login = () => {
 
           <p className="signup-text">
             Don’t have an account yet?{' '}
-            <span className="signup-link" onClick={() => navigate('/signup')}>Sign up for free</span>
+            <span className="signup-link" onClick={() => navigate('/signup')}>
+              Sign up for free
+            </span>
           </p>
         </div>
       </div>
