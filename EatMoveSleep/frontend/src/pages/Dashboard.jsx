@@ -16,11 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
-      if (y > lastY.current && y > 80) {
-        setShowWelcome(false);
-      } else {
-        setShowWelcome(true);
-      }
+      setShowWelcome(!(y > lastY.current && y > 80));
       lastY.current = y;
     };
     window.addEventListener('scroll', handleScroll);
@@ -60,7 +56,6 @@ const Dashboard = () => {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', fontFamily: "'Helvetica Neue', sans-serif" }}>
-      {/* Background */}
       <div
         style={{
           position: 'absolute',
@@ -76,7 +71,6 @@ const Dashboard = () => {
         }}
       />
 
-      {/* Welcome message below navbar */}
       <div
         style={{
           position: 'fixed',
@@ -105,7 +99,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Foreground content */}
       <div style={{ position: 'relative', zIndex: 1, color: 'white', padding: '2rem', maxWidth: '900px', margin: '0 auto', paddingTop: '140px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
           {image ? (
@@ -143,38 +136,13 @@ const Dashboard = () => {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 220px)',
-          gap: '2.5rem 2.5rem',
+          gap: '3rem 3rem',
           justifyContent: 'center',
         }}>
-          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} borderColor="#fde68a" />
-          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} borderColor="#bbf7d0" />
-          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} borderColor="#c7d2fe" />
-          <div
-            style={{
-              width: '220px',
-              height: '120px',
-              backgroundColor: 'white',
-              border: '3.3px solid #60c5f9',
-              borderRadius: '10px',
-              padding: '0.8rem',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              lineHeight: 1.2,
-              color: '#111',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
-            }}
-          >
-            <p style={{ margin: 0, marginBottom: '6px', fontSize: '14px' }}>Water</p>
-            <h3 style={{ margin: 0, marginBottom: '6px', fontSize: '20px' }}>{waterCups}/8 Cups</h3>
-            <div style={{ display: 'flex', gap: '0.8rem' }}>
-              <button onClick={() => setWaterCups(w => Math.max(0, w - 1))} style={circleButton}>−</button>
-              <button onClick={() => setWaterCups(w => Math.min(8, w + 1))} style={circleButton}>+</button>
-            </div>
-          </div>
+          <StatBox label="Calories In" value={`${meals.reduce((sum, m) => sum + m.calories, 0)} kcal`} bgColor="#fde68a" />
+          <StatBox label="Calories Out" value={`${workouts.reduce((sum, w) => sum + w.calories, 0)} kcal`} bgColor="#bbf7d0" />
+          <StatBox label="Sleep" value={`${sleep.reduce((sum, s) => sum + s.hours, 0)} h`} bgColor="#c7d2fe" />
+          <StatBox label="Water" value={`${waterCups}/8 Cups`} bgColor="#bae6fd" isWater onDecrement={() => setWaterCups(w => Math.max(0, w - 1))} onIncrement={() => setWaterCups(w => Math.min(8, w + 1))} />
         </div>
       </div>
     </div>
@@ -206,7 +174,7 @@ const circleButton = {
   height: '26px',
   borderRadius: '50%',
   backgroundColor: 'white',
-  color: '#60c5f9',
+  color: '#111827',
   border: '2px solid #60c5f9',
   fontSize: '1rem',
   fontWeight: 'bold',
@@ -216,25 +184,31 @@ const circleButton = {
   justifyContent: 'center',
 };
 
-const StatBox = ({ label, value, borderColor }) => (
+const StatBox = ({ label, value, bgColor, isWater, onDecrement, onIncrement }) => (
   <div style={{
     width: '220px',
     height: '120px',
-    backgroundColor: 'white',
-    border: `3.3px solid ${borderColor}`,
+    backgroundColor: bgColor,
     borderRadius: '10px',
     padding: '0.8rem',
-    color: '#111',
     fontWeight: 'bold',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    lineHeight: 1.2,
+    color: '#111',
     boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
   }}>
-    <p style={{ margin: 0, fontSize: '14px' }}>{label}</p>
-    <h3 style={{ margin: '0.4rem 0 0', fontSize: '20px' }}>{value}</h3>
+    <p style={{ margin: 0, marginBottom: '6px', fontSize: '14px' }}>{label}</p>
+    <h3 style={{ margin: 0, marginBottom: isWater ? '6px' : '0', fontSize: '20px' }}>{value}</h3>
+    {isWater && (
+      <div style={{ display: 'flex', gap: '0.8rem' }}>
+        <button onClick={onDecrement} style={circleButton}>−</button>
+        <button onClick={onIncrement} style={circleButton}>+</button>
+      </div>
+    )}
   </div>
 );
 

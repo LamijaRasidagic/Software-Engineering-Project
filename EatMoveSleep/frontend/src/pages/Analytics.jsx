@@ -22,14 +22,19 @@ const Analytics = () => {
     const sleep = JSON.parse(localStorage.getItem(`ems_sleep_${email}`)) || [];
 
     const caloriesIn = meals.reduce((sum, m) => sum + (m.calories || 0), 0);
-    const caloriesOut = workouts.reduce((sum, w) => sum + (w.durationMinutes || 0), 0);
+
+    const today = new Date().toISOString().split('T')[0];
+    const todaysCaloriesOut = workouts
+      .filter(w => w.date === today)
+      .reduce((sum, w) => sum + (w.calories || 0), 0);
+
     const totalSleep = sleep.reduce((sum, s) => sum + (s.hours || 0), 0);
     const avgSleep = sleep.length ? (totalSleep / sleep.length).toFixed(1) : 0;
 
     setSummary({
       mealCount: meals.length,
       caloriesIn,
-      caloriesOut,
+      caloriesOut: todaysCaloriesOut,
       sleepHours: totalSleep,
       avgSleep
     });
@@ -99,7 +104,6 @@ const Analytics = () => {
   );
 };
 
-// Styles
 const container = {
   textAlign: 'center'
 };
